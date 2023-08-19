@@ -19,7 +19,7 @@ import com.cms.service.cost.CmsCostService;
 import com.utils.ServiceUtils;
 
 /**
- * ログイン コントローラー
+ * ログイン コントローラー（GitHub確認1回目）
  */
 @Controller
 @RequestMapping(value = "/cost/cmscostedit")
