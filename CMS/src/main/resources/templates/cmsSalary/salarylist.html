@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="common/common_header.html"></div>
+
+<body><!-- 表示将表单提交到路径为/marketstore/MarketStorelist的URL上。使用POST方法提交表单数据-->
+	<form th:action="@{/cmsSalary/salarylist}" method="POST"
+		th:object="${form}">
+		<div class="publicHeader" th:insert="~{fragments/header :: header}">...</div>
+		<!--时间-->
+		<section class="publicTime">
+			<span id="time">2015年1月1日 11:11 星期一</span> <a href="#">メッセージ</a>
+		</section>
+		<!--主体内容-->
+		<section class="publicMian">
+			<div class="left" th:insert="~{fragments/left :: left}">...</div>
+			<div class="right">
+				<div class="location">
+					<strong>画面情報：</strong> <span>給料一覧</span> <br />
+					<span th:if="${form.errorMessage!=null}" th:text="${form.errorMessage}" style="color: red;"></span>
+				</div>
+				
+                <!-- ■検索条件 -->
+				<div class="search row">
+	                <div class="class_td_50">
+						<label>名前 ：</label>
+						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="name" /> <!-- 非表示の明細ボタン -->
+						<!-- <input type="submit" name="read" id="read" style="display: none;" />
+						<input type="submit" name="delete" id="delete" style="display: none;" />
+						<input type="hidden" id="selectedItemIds" name="selectedItemIds"/>	 -->
+					</div>
+					
+					<div class="class_td_50"></div>
+					<div class="class_td_50">
+						<label>会社：</label>
+						<input type="text" name="companyName" th:id="${form.companyName}" th:value="${form.companyName}" placeholder="companyName" /> <!-- 非表示の明細ボタン -->
+							
+					</div>
+					
+					<div class="class_td_50">
+						<label>部門：</label>
+						<input type="text" name="departmentName" th:id="${form.departmentName}" th:value="${form.departmentName}" placeholder="departmentName" /> <!-- 非表示の明細ボタン -->
+							
+					</div>
+	        
+	                <div class="class_td_50">
+						<input type="submit" id="select" name="select" value="検索" width="30px;"/>
+						<input type="submit" id="addSalary" name="addSalary" value="新規"  width="30px;" th:style="${form.disabledFlg}"/>
+						<input type="submit" id="delete"name="delete" value="削除"  width="30px;" th:style="${form.disabledFlg}"/>
+						<input type="submit" name="update" id="update" style="display: none;" />
+						<input type="hidden" name="deleteStoreIds" id="deleteStoreIds"/>
+					
+					</div>
+	               
+				</div>
+				
+                <!-- ■検索結果 -->
+				<div style="padding-top: 10px;">
+					<!--用户-->
+					<table class="providerTable" th:if="${form != null}">
+						<tr class="firstTr">
+							<th width="5%"><input type="checkbox" id="all"></th>
+							<th width="10%">社員ID</th>
+							<th width="10%">社員名</th>
+							<th width="10%">グループ会社</th>
+							<th width="10%">部門</th>
+							<th width="10%">給料</th>
+							<th width="10%">在職状態</th>
+							<th width="10%">給料変更日</th>
+							<th width="10%">アクション</th>
+						</tr>
+						<tr th:if="${!#lists.isEmpty(form.results)}"
+							th:each="data: ${form.results}">
+							<td style="text-align: center;">
+							    <input type="checkbox" th:id="checkBoxId" th:name="checkBoxId" th:value="${data.storeId}" />
+							</td>
+							<td th:text="${data.employeeId}"></td>
+							<td th:text="${data.employeeName}"></td>
+							<td th:text="${data.affiliatedCompany}"></td>
+							<td th:text="${data.departmentName}"></td>
+							<td th:text="${data.jobStatus}"></td>
+							<td th:text="${data.changeDate}"></td>
+							<td>
+							    <img th:src="@{/img/update.png}" alt="変更" title="変更" onclick="clickUpdate(this)" th:value="${data.employeeId}" />
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<!--削除ボタンを押下後、ポップアップDIV画面が表示される-->
+		<div class="zhezhao"></div>
+		<div class="remove" id="removeUse">
+			<div class="removerChid">
+				<h2>提示</h2>
+				<div class="removeMain">
+					<p>削除したらよろしいでしょうか</p>
+					<a href="#" id="yes">削除</a> <a href="#" id="no">キャンセル</a>
+				</div>
+			</div>
+		</div>
+
+	</form>
+	<div class="footer" th:insert="~{fragments/footer :: footer}">...</div>
+
+	<!-- 共通Js -->
+	<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{/js/js.js}"></script>
+	<script type="text/javascript" th:src="@{/js/time.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- 画面Js -->
+	<script type="text/javascript" th:src="@{/js/salary/salarylist.js}"></script>
+
+	
+</body>
+</html>
