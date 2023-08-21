@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cms.mapper.common.GeneralMstMapper">
+<mapper namespace="com.cms.base.mapper.GeneralMstMapper">
 
 	<select id="select"
-		parameterType="com.cms.entity.common.GeneralMstBean"
-		resultType="com.cms.entity.common.GeneralMstBean">
+		parameterType="com.cms.base.entity.GeneralMstBean"
+		resultType="com.cms.base.entity.GeneralMstBean">
 		SELECT
 		generalId
 		, generalName

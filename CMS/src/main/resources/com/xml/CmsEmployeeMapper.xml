@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cms.mapper.employee.CmsEmployeeMapper">
+<mapper namespace="com.cms.sample.mapper.employee.CmsEmployeeMapper">
 	<select id="selectMaxId" resultType="String">
         SELECT
         max(employeeId) as employeeId
@@ -11,7 +11,7 @@
 	</select>
 
 	<select id="selectRecordCount"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean"
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean"
         resultType="Integer">
         SELECT
         count(employeeId) as recCount
@@ -29,8 +29,8 @@
 	</select>
 
 	<select id="select"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean"
-        resultType="com.cms.entity.employee.CmsEmployeeBean">
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean"
+        resultType="com.cms.sample.entity.employee.CmsEmployeeBean">
         SELECT
         cms.employeeId as employeeId,
         cms.name,
@@ -86,8 +86,8 @@
 	</select>
 
 	<select id="selectList"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean"
-        resultType="com.cms.entity.employee.CmsEmployeeBean">
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean"
+        resultType="com.cms.sample.entity.employee.CmsEmployeeBean">
         SELECT
         *
         FROM
@@ -102,7 +102,7 @@
         </where>
 	</select>
 	<insert id="insert"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean">
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean">
         INSERT INTO cms_employee (
         employeeId,
         name,
@@ -150,7 +150,7 @@
 	</insert>
 
 	<update id="update"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean">
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean">
         update cms_employee
         set name = #{name},
         sex = #{sex},
@@ -174,7 +174,7 @@
 	</update>
 
 	<delete id="delete"
-        parameterType="com.cms.entity.employee.CmsEmployeeBean">
+        parameterType="com.cms.sample.entity.employee.CmsEmployeeBean">
         delete from cms_employee
         where employeeId = #{employeeId}
 	</delete>

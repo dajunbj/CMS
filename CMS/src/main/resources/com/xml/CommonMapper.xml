@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cms.mapper.common.CommonMapper">
+<mapper namespace="com.cms.base.mapper.CommonMapper">
 
 	<select id="select"
-		parameterType="com.cms.entity.common.MCodeMstBean"
-		resultType="com.cms.entity.common.MCodeMstBean">
+		parameterType="com.cms.base.entity.MCodeMstBean"
+		resultType="com.cms.base.entity.MCodeMstBean">
 		SELECT
 		codeKey
 		, codeName

@@ -9,8 +9,9 @@ import javax.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cms.entity.common.GeneralMstBean;
-import com.cms.mapper.common.GeneralMstMapper;
+import com.cms.base.entity.GeneralMstBean;
+import com.cms.base.mapper.GeneralMstMapper;
+
 
 @Service
 public class ServiceUtils {

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cms.mapper.cost.CmsCostMapper">
+<mapper namespace="com.cms.sample.mapper.cost.CmsCostMapper">
 
     <select id="selectMaxId"
         resultType="String">
@@ -13,8 +13,8 @@
     </select>
     
     
-    <select id="select" parameterType="com.cms.entity.cost.CmsCostBean"
-        resultType="com.cms.entity.cost.CmsCostBean">
+    <select id="select" parameterType="com.cms.sample.entity.cost.CmsCostBean"
+        resultType="com.cms.sample.entity.cost.CmsCostBean">
         SELECT
         cos.costId,
         cos.costDay,
@@ -55,8 +55,8 @@
     </select>
 
     <select id="selectList"
-        parameterType="com.cms.entity.cost.CmsCostBean"
-        resultType="com.cms.entity.cost.CmsCostBean">
+        parameterType="com.cms.sample.entity.cost.CmsCostBean"
+        resultType="com.cms.sample.entity.cost.CmsCostBean">
         SELECT
         costId,
         costDay,
@@ -80,7 +80,7 @@
             </if>
         </where>
     </select>
-    <insert id="insert" parameterType="com.cms.entity.cost.CmsCostBean">
+    <insert id="insert" parameterType="com.cms.sample.entity.cost.CmsCostBean">
         INSERT INTO cms_cost (
         costId,
         costDay,
@@ -108,7 +108,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.cms.entity.cost.CmsCostBean">
+    <update id="update" parameterType="com.cms.sample.entity.cost.CmsCostBean">
         update cms_cost
         set costNote= #{costNote},
         costDay = #{costDay},
@@ -121,7 +121,7 @@
         where costId = #{costId}
     </update>
 
-    <delete id="delete" parameterType="com.cms.entity.cost.CmsCostBean">
+    <delete id="delete" parameterType="com.cms.sample.entity.cost.CmsCostBean">
         delete from cms_cost
         where costId = #{costId}
     </delete>
