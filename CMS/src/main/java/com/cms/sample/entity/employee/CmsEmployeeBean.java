@@ -1,7 +1,5 @@
 package com.cms.sample.entity.employee;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,8 +13,8 @@ public class CmsEmployeeBean {
 	@Column(name = "employeeId")
 	private String employeeId;
 	
-	@Column(name = "name")
-	private String name;
+	@Column(name = "employeeName")
+	private String employeeName;
 	
 	@Column(name = "sex")
 	private String sex;
@@ -40,28 +38,9 @@ public class CmsEmployeeBean {
 	@Column(name = "jobType")
 	private String jobType;
 	
-	@Column(name = "jobLevel")
-	private String jobLevel;
-	
-	@Column(name = "employeeKbn")
-	private String employeeKbn;
-	private String employeeKbnForList;
+//	@Column(name = "jobLevel")
+//	private String jobLevel;
 
-	@Column(name = "salary")
-	private BigDecimal salary;
-	
-	@Column(name = "employeeType")
-	private String employeeType;
-	
-	@Column(name = "hasTax")
-	private String hasTax;
-	
-	@Column(name = "topWorkHour")
-	private int topWorkHour;
-	
-	@Column(name = "downWorkHour")
-	private int downWorkHour;
-	
 	@Column(name = "loginId")
 	private String loginId;
 	
@@ -73,4 +52,6 @@ public class CmsEmployeeBean {
 	
 	@Column(name = "updateDay")
 	private String updateDay;
+	
+	
 }

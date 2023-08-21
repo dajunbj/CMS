@@ -16,37 +16,39 @@
 			<div class="left" th:insert="~{fragments/left :: left}">...</div>
 			<div class="right">
 				<div class="location">
-					<strong>画面情報：</strong> <span>社員一覧</span> <br />
+					<strong>画面情報：</strong> <span>社員一覧画面</span> <br/>
 					<span th:if="${form.errorMessage!=null}" th:text="${form.errorMessage}" style="color: red;"></span>
 				</div>
 				
                 <!-- ■検索条件 -->
 				<div class="search row">
 	                <div class="class_td_50">
-						<label>名 前：</label>
+						<label>名前：</label>
 						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="社員名前" /> <!-- 非表示の明細ボタン -->
 							<input type="submit" name="read" id="read" style="display: none;" />
 							<input type="submit" name="update" id="update" style="display: none;" />
 							<input type="submit" name="delete" id="delete" style="display: none;" />
 							<input type="hidden" id="selectedItemIds" name="selectedItemIds"/>
 					</div>
-	        
+					
 	                <div class="class_td_50">
-						<label>社員区分：</label>			
-					    <div th:each="item : ${form.employeeKbnMap}" style="display:inline-flex;vertical-align:middle;">
-					        <input type="radio" th:text="${item.value}" th:value="${item.key}" th:field="*{selectedEmployeeKbn}" style="vertical-align:middle;">
-				        </div>
+						<label>所属会社：</label>
+						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="所属会社" />
+						🔎
 					</div>
+					
 	                <div class="class_td_50">
-						<label>性別：</label>			
+						<label>部門：</label>
+						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="部門" /> 
+					</div>
+					
+	                <div class="class_td_50">
+						<label>性別：</label>
 					    <div th:each="item : ${form.sexyList}" style="display:inline-flex;vertical-align:middle;">
 					        <input type="radio" th:text="${item.value}" th:value="${item.key}" th:field="*{selectedSexy}" style="vertical-align:middle;">
 				        </div>
 					</div>
-	                <div class="class_td_50">
-						<label>生年月：</label>
-						<input type="month" name="month" th:id="${form.month}" th:value="${form.month}"/>
-					</div>
+
 	                <div class="class_td_50">
 						<input type="submit" id="select" name="select" value="検索" width="30px;"/>
 						<input type="submit" id="add" name="add" value="新規"  width="30px;" th:style="${form.disabledFlg}"/>
@@ -61,14 +63,13 @@
 					<table class="providerTable" th:if="${form != null}">
 						<tr class="firstTr">
 							<th width="5%"><input type="checkbox" id="all"></th>
-							<th width="10%">社員ID</th>
 							<th width="10%">名前</th>
-							<th width="10%">入社年月日</th>
 							<th width="5%">性別</th>
-							<th width="10%">社員区分</th>
+							<th width="5%">会社名</th>
+							<th width="5%">部門</th>
 							<th width="10%">生年月日</th>
 							<th width="10%">電話</th>
-							<th width="20%">住所</th>
+							<th width="10%">入社年月日</th>
 							<th width="10%">アクション</th>
 						</tr>
 						<tr th:if="${!#lists.isEmpty(form.results)}"
@@ -76,14 +77,13 @@
 							<td style="text-align: center;">
 							    <input type="checkbox" th:id="checkBoxId" th:name="checkBoxId" th:value="${data.employeeId}" />
 							</td>
-							<td th:text="${data.employeeId}"></td>
 							<td th:text="${data.name}"></td>
-							<td th:text="${data.joiningDate}"></td>
 							<td th:text="${data.sexForList}"></td>
-							<td th:text="${data.employeeKbnForList}"></td>
+							<td th:text="${data.companyName}"></td>
+							<td th:text="${data.departmentName}"></td>
 							<td th:text="${data.birthday}"></td>
 							<td th:text="${data.phone}"></td>
-							<td th:text="${data.address}"></td>
+							<td th:text="${data.joiningDate}"></td>
 							<td>
 							    <img th:src="@{/img/read.png}" alt="参照" title="参照" onclick="clickRead(this);" th:value="${data.employeeId+'_'+data.updateDay}" />
 							    <img th:src="@{/img/update.png}" alt="更新" title="更新" onclick="clickUpdate(this)" th:value="${data.employeeId+'_'+data.updateDay}" />

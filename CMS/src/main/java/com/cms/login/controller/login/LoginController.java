@@ -65,7 +65,7 @@ public class LoginController {
 		if (formChk.getResults() != null && formChk.getResults().size() > 0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("employeeId", formChk.getResults().get(0).getEmployeeId());
-			session.setAttribute("employeeName", formChk.getResults().get(0).getName());
+			session.setAttribute("employeeName", formChk.getResults().get(0).getEmployeeName());
 			session.setAttribute("jobType", formChk.getResults().get(0).getJobType());
 			return "redirect:/menu";
 		} else {

@@ -22,7 +22,7 @@
 				<div class="providerDetail">
 
 					<div class="div_edit_row">
-						<label>社員ID：</label>
+						<label id="a">社員ID：</label>
 						    <input name="employeeIdShow" type="text" th:value="${form.employeeId}" th:field="*{employeeId}" th:disabled="disabled" />
 						    <input name="employeeId" type="hidden" th:value="${form.employeeId}" th:field="*{employeeId}" />
 					</div>
@@ -32,11 +32,12 @@
 					        <input type="radio" th:text="${item.value}" th:value="${item.key}" th:field="*{selectedEmployeeKbn}" style="vertical-align:middle;">
 				        </div>
 					</div>
-					<div class="div_edit_row">
-						<label>社員名：</label>
-                        <input name="name" type="text" th:value="${form.name}" th:field="*{name}" />
-                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></span>
+					
+                	<div class="class_td_50">
+						<label>会社名：</label>
+						<input type="text" name="storeName" th:id="${form.storeName}" th:value="${form.storeName}" placeholder="販売店名を入力してください" /> <!-- 非表示の明細ボタン -->
 					</div>
+					
 					<div class="div_edit_row">
 						<label>性別：</label>
 						<div style="display:inline-flex">					

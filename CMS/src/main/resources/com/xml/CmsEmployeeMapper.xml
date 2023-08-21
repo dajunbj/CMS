@@ -33,42 +33,31 @@
         resultType="com.cms.sample.entity.employee.CmsEmployeeBean">
         SELECT
         cms.employeeId as employeeId,
-        cms.name,
+        cms.employeeName,
         cms.sex,
-        mst2.generalName as sexForList,
+        mst.generalName as sexForList,
         DATE_FORMAT(cms.birthday, '%Y-%m-%d') as birthday,
         DATE_FORMAT(cms.joiningDate, '%Y-%m-%d') as joiningDate,
         cms.address,
         cms.phone,
         cms.mail,
         cms.jobType,
-        cms.jobLevel,
-        cms.salary,
-        cms.employeeType,
-        cms.hasTax,
-        cms.topWorkHour,
-        cms.downWorkHour,
         cms.loginId,
         cms.password,
-        cms.employeeKbn,
-        mst1.generalName as employeeKbnForList,
         DATE_FORMAT(cms.registDay, '%Y-%m-%d %H:%i:%s') as registDay,
         DATE_FORMAT(cms.updateDay, '%Y-%m-%d %H:%i:%s') as updateDay
-        FROM
-        cms_employee cms
-        left join cms_general_mst mst1 on cms.employeeKbn = mst1.generalId
-                                     and mst1.generalKey = 'EMPLOYEE_TYPE'
-        left join cms_general_mst mst2 on cms.sex = mst2.generalId
-                                     and mst2.generalKey = 'SEXY'
+        FROM                              
+		cms_pg.cms_employee cms
+    	left join cms_pg.cms_company com on cms.companyID=com.companyId
+    	left join cms_pg.cms_department dep on cms.departmentID=dep.departmentId
+    	left join cms_pg.cms_general_mst mst on cms.sex=mst.generalId
+    								 and mst.generalKey='SEXY'
         <where>
         <if test="employeeId != null">
         	and employeeId = #{employeeId}
         </if>
-        <if test="name != null">
-        	and name like concat('%',#{name},'%')
-        </if>
-        <if test="employeeKbn != null">
-        	and employeeKbn = #{employeeKbn}
+        <if test="employeeName != null">
+        	and employeeName like concat('%',#{employeeName},'%')
         </if>
         <if test="sex != null">
         	and sex = #{sex}
