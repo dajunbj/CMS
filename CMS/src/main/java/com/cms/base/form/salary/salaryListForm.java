@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ユーザー情報 検索用リクエストデータ
+ * ユーザー情報 検索用リクエストデータ111
  */
 @Getter
 @Setter
