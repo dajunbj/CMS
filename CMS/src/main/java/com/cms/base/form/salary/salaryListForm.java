@@ -1,10 +1,5 @@
 package com.cms.base.form.salary;
 
-import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
-
-import com.cms.base.entity.salary.salaryBean;
 import com.cms.base.form.BaseForm;
 
 import lombok.Getter;
@@ -18,13 +13,13 @@ import lombok.Setter;
 public class salaryListForm extends BaseForm {
 
 	
-	@NotEmpty
+	
 	private String employeeName;
 	private String companyName;
 	private String departmentName;
 	
 	//全删除按钮（复数）
-	private String deleteStoreIds;
+	private String deleteemployeeIds;
 	//public String getStoreId();
 	//選択対象(ID+最終更新日)
 	private String selectedItemId;
@@ -35,7 +30,7 @@ public class salaryListForm extends BaseForm {
 	
 	
 	/* 検索結果 */
-	private List<salaryBean> results;
+	//private List<sssBean> results;
 
 	
 

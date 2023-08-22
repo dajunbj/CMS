@@ -1,7 +1,8 @@
 package com.cms.base.form.salary;
 
-import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
+import com.cms.base.entity.salary.employeeBean;
 import com.cms.base.form.BaseForm;
 
 import lombok.Data;
@@ -20,16 +21,16 @@ public class salaryForm extends BaseForm {
 	
 	
 	private String employeeId;
-	@NotEmpty
+	//@NotEmpty
 	private String employeeName;
-	@NotEmpty
+	//@NotEmpty
 	private String affiliatedCompany;
-	@NotEmpty
+	//@NotEmpty
 	private String departmentName;
 	
-	@NotEmpty
+	//@NotEmpty
 	private String jobStatus;
-	@NotEmpty
+	//@NotEmpty
 	private String changeDate;
 	
 //	public void setResults(List<MarketStoreBean> results) {
@@ -38,5 +39,5 @@ public class salaryForm extends BaseForm {
 //	}
 	
 	/* 検索結果 */
-	//private List<MarketStoreBean> results;
+	private List<employeeBean> results;
 }

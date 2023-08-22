@@ -17,10 +17,20 @@ public class employeeBean {
 	@Column(name = "employeeName")
 	private String employeeName;
 	
+	@Column(name = "companyName")
+	private String companyName;
+	
+	@Column(name = "departmentName")
+	private String departmentName;
+	
+	@Column(name = "newSalary")
+	private String newSalary;
 	
 	@Column(name = "jobStatus")
 	private String jobStatus;
 	
+	@Column(name = "changeDate")
+	private String changeDate;
 	
 	
 

@@ -1,4 +1,4 @@
-package com.cms.base.service;
+package com.cms.common;
 
 import java.util.List;
 

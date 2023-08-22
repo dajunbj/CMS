@@ -24,7 +24,7 @@
 				<div class="search row">
 	                <div class="class_td_50">
 						<label>名前 ：</label>
-						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="name" /> <!-- 非表示の明細ボタン -->
+						<input type="text" name="employeeName" th:id="${form.employeeName}" th:value="${form.employeeName}" placeholder="employeeName"/> <!-- 非表示の明細ボタン -->
 						<!-- <input type="submit" name="read" id="read" style="display: none;" />
 						<input type="submit" name="delete" id="delete" style="display: none;" />
 						<input type="hidden" id="selectedItemIds" name="selectedItemIds"/>	 -->
@@ -33,7 +33,7 @@
 					<div class="class_td_50"></div>
 					<div class="class_td_50">
 						<label>会社：</label>
-						<input type="text" name="companyName" th:id="${form.companyName}" th:value="${form.companyName}" placeholder="companyName" /> <!-- 非表示の明細ボタン -->
+						<input type="text" name="companyName" th:id="${form.companyName}" th:value="${form.companyName}" placeholder="companyName"/> <!-- 非表示の明細ボタン -->
 							
 					</div>
 					
@@ -48,12 +48,12 @@
 						<input type="submit" id="addSalary" name="addSalary" value="新規"  width="30px;" th:style="${form.disabledFlg}"/>
 						<input type="submit" id="delete"name="delete" value="削除"  width="30px;" th:style="${form.disabledFlg}"/>
 						<input type="submit" name="update" id="update" style="display: none;" />
-						<input type="hidden" name="deleteStoreIds" id="deleteStoreIds"/>
+						<input type="hidden" name="deleteEmployeeIds" id="deleteEmployeeIds"/>
 					
 					</div>
-	               
-				</div>
-				
+	             </div> 
+		
+			 	
                 <!-- ■検索結果 -->
 				<div style="padding-top: 10px;">
 					<!--用户-->
@@ -72,7 +72,7 @@
 						<tr th:if="${!#lists.isEmpty(form.results)}"
 							th:each="data: ${form.results}">
 							<td style="text-align: center;">
-							    <input type="checkbox" th:id="checkBoxId" th:name="checkBoxId" th:value="${data.storeId}" />
+							    <input type="checkbox" th:id="checkBoxId" th:name="checkBoxId" th:value="${data.employeeId}"/>
 							</td>
 							<td th:text="${data.employeeId}"></td>
 							<td th:text="${data.employeeName}"></td>
@@ -95,7 +95,7 @@
 				<h2>提示</h2>
 				<div class="removeMain">
 					<p>削除したらよろしいでしょうか</p>
-					<a href="#" id="yes">削除</a> <a href="#" id="no">キャンセル</a>
+					<a href="#" id="yes">削除</a><a href="#" id="no">キャンセル</a>
 				</div>
 			</div>
 		</div>
