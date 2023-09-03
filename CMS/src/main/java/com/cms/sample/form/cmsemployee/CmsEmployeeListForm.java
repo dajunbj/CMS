@@ -21,12 +21,19 @@ public class CmsEmployeeListForm extends BaseForm {
 	/* 検索結果 */
 	private List<CmsEmployeeBean> results;
 
+	/* 画面からの入力値 */
 	private String employeeId;
 
-	@NotEmpty
-	private String name;
+	private String employeeName;
 	
-	private String type;
+	//会社名
+	private String companyName;
+	
+	//部門名
+	private String departmentName;
+	private Map<String, String> departmentList;
+			
+	private String jobType;
 	
 	//生年月
 	private String month;
@@ -41,10 +48,6 @@ public class CmsEmployeeListForm extends BaseForm {
 	private String selectedSexy;
 	private Map<String, String> sexyList;
 
-	//社員区分
-	private Map<String, String> employeeKbnMap;
-	private String selectedEmployeeKbn;
-	
 	//全選択の削除対象
 	private String selectedItemIds;
 	

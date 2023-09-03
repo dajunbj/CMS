@@ -266,7 +266,7 @@ public class CmsCostServiceImpl implements CmsCostService {
 	 */
 	public List<CmsEmployeeBean> searchEmployees(String name) {
 		CmsEmployeeBean bean = new CmsEmployeeBean();
-		bean.setName(name);
+		bean.setEmployeeName(name);
 		List<CmsEmployeeBean> retList = employeeMapper.select(bean);
 		return retList;
 	}

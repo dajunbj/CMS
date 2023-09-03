@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cms.base.entity.DepartmentBean;
 import com.cms.base.entity.GeneralMstBean;
 
 /**
@@ -19,4 +20,5 @@ public interface GeneralMstMapper {
 	 */
 	List<GeneralMstBean> select(GeneralMstBean bean);
 
+	List<DepartmentBean> selectDep(DepartmentBean bean);
 }

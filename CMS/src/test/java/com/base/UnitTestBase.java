@@ -20,7 +20,7 @@ public class UnitTestBase {
 	 **/
 	public static IDatabaseConnection connect() throws Exception {
 	    // ①DBコネクション取得
-	    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mysql_pg", "root", "wyl@2022");
+	    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mysql_pg", "root", "Hjiafei453");
 	    IDatabaseConnection dbconn = new DatabaseConnection(conn);
 	    
 	    return dbconn;

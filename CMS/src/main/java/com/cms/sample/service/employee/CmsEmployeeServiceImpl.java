@@ -1,16 +1,17 @@
 package com.cms.sample.service.employee;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import com.cms.base.entity.DepartmentBean;
 import com.cms.base.mapper.CommonMapper;
+import com.cms.base.mapper.GeneralMstMapper;
 import com.cms.common.MessageConst;
 import com.cms.sample.entity.employee.CmsEmployeeBean;
 import com.cms.sample.form.cmsemployee.CmsEmployeeForm;
@@ -39,6 +40,10 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 	@Autowired
 	ServiceUtils serviceUtils;
 	
+	@Autowired
+	GeneralMstMapper generalMstMapper;
+
+	
 	/**
 	 * ユーザー情報検索 @param userSearchRequest リクエストデータ
 	 * 
@@ -49,20 +54,9 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 		CmsEmployeeBean bean = new CmsEmployeeBean();
 		
 		//社員名
-		bean.setName(CmsUtils.formatEmptyToNull(form.getName()));
-
-		if (StringUtils.isNotEmpty(form.getSessionEmployeeId()) && "J5".equals(form.getSessionJobType())) {
-			/**
-			 * 社員ID
-			 * ・{社員:J5}の場合、社員自己の費用を抽出する
-			 * ・{社員:J5}以外の場合、社員全体の費用を抽出する
-			 */
-			bean.setEmployeeId(form.getSessionEmployeeId());
-		}
-		
-		//社員区分
-		if (!"2".equals(form.getSelectedEmployeeKbn())){
-			bean.setEmployeeKbn(CmsUtils.formatEmptyToNull(form.getSelectedEmployeeKbn()));
+		//bean.setEmployeeName(CmsUtils.formatEmptyToNull(form.getEmployeeName()));
+		if(StringUtils.isNotEmpty(form.getEmployeeName())){
+			bean.setEmployeeName(form.getEmployeeName());
 		}
 		
 		//性別
@@ -70,10 +64,14 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 			bean.setSex(CmsUtils.formatEmptyToNull(form.getSelectedSexy()));
 		}
 		
-		//生年月
-		if (StringUtils.isNotEmpty(form.getMonth())) {
-		    bean.setBirthday(form.getMonth()+"-01");
+		if(StringUtils.isNotEmpty(form.getDepartmentName())){
+			bean.setDepartmentName(form.getDepartmentName()); 
 		}
+		
+		if(StringUtils.isNotEmpty(form.getCompanyName())) {
+			bean.setCompanyName(form.getCompanyName());
+		}
+
 
 		List<CmsEmployeeBean> retList = mapper.select(bean);
 		if (retList == null || retList.size() == 0) {
@@ -95,29 +93,39 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 
 		// ログイン情報を検索する
 		CmsEmployeeBean bean = new CmsEmployeeBean();
-
-		String maxId = mapper.selectMaxId();
 		
-		bean.setEmployeeId(String.valueOf(Integer.valueOf(maxId) + 1)); // 社員ID
-		bean.setName(form.getName()); // 名前
+		String maxId = mapper.selectMaxId();
+		String employeeId=String.valueOf(Integer.valueOf(maxId) + 1);
+		String Job;
+		if("J4".equals(form.getJobType())){
+			Job="0";
+		}else {
+			Job="1";
+		}
+		DepartmentBean depBean =new DepartmentBean();
+		String dep =form.getDepartmentName();
+		depBean.setDepartmentId(dep);
+		List<DepartmentBean> depList = generalMstMapper.selectDep(depBean);
+		
+		bean.setEmployeeId(employeeId); // 社員ID+1
+		bean.setEmployeeName(form.getEmployeeName()); // 名前
 		bean.setSex(form.getSelectedSexy()); // 性別
 		bean.setBirthday(form.getBirthday()); // 生年月日
 		bean.setAddress(form.getAddress()); // 住所
 		bean.setPhone(form.getPhone()); // 携帯
 		bean.setJoiningDate(form.getJoiningDate()); // 入社年月日
 		bean.setMail(form.getMail()); // メール
-		bean.setJobType(form.getSelectedJobType()); // 職種
-		bean.setJobLevel("TMP"); // 職種レベル
-		bean.setEmployeeKbn(form.getSelectedEmployeeKbn());// 職種レベル
-		bean.setLoginId(form.getMail()); // ログインID
-		bean.setPassword(form.getMail()); // パスワード
-		bean.setTopWorkHour(Integer.valueOf(form.getTopWorkHour())); // 勤務時間上限
-		bean.setDownWorkHour(Integer.valueOf(form.getDownWorkHour())); // 勤務時間下限
-		bean.setSalary(new BigDecimal(form.getSalary())); // 給料
-		bean.setEmployeeType(form.getSelectedEmployeeType()); // 社員種別
-		bean.setHasTax(form.getSelectedHasTax()); // 税金有無
+		bean.setJobType(form.getJobType()); // 職種
+		bean.setJobStatus("0");
+		bean.setDelFlg("0");
+		bean.setDepartmentName(depList.get(0).getDepartmentName()); //部門名
+		bean.setDepartmentID(depList.get(0).getDepartmentId());	//部門ID
+		bean.setCompanyID(form.getCompanyID());
+		bean.setLoginId(employeeId); // ログインID
+		bean.setPassword(employeeId); // パスワード
+		bean.setPermissonID(Job);
 		mapper.insert(bean);
-
+		
 		return form;
 	}
 
@@ -136,25 +144,24 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 		List<CmsEmployeeBean> searchResults = mapper.select(sqlBean);
 		if (!CollectionUtils.isEmpty(searchResults)) {
 			CmsEmployeeBean result = searchResults.get(0);
-
+			
 			form.setEmployeeId(result.getEmployeeId()); // 社員ID
-			form.setName(result.getName()); // 名前
+			form.setEmployeeName(result.getEmployeeName()); // 名前
 			form.setSelectedSexy(result.getSex()); // 性別
-			form.setBirthday(result.getBirthday().toString());    // 生年月日
-			form.setAddress(result.getAddress()); // 住所
-			form.setPhone(result.getPhone()); // 携帯
-			form.setJoiningDate(result.getJoiningDate().toString()); // 入社年月日
 			form.setMail(result.getMail()); // メール
+			form.setBirthday(result.getBirthday().toString());    // 生年月日
+			form.setPhone(result.getPhone()); // 携帯
+			form.setAddress(result.getAddress()); // 住所
+			form.setDepartmentName(result.getDepartmentName());	//部門名
+			form.setCompanyName(result.getCompanyName());	//会社名
+			form.setCompanyID("0001");	//会社ID
 			form.setJobType(result.getJobType()); // 職種
-			form.setSelectedJobType(result.getJobType());// 職種(選択された)
-			form.setSelectedEmployeeKbn(result.getEmployeeKbn());// 社員区分
-			form.setSalary(result.getSalary().toString());// 携帯
-			form.setTopWorkHour(String.valueOf(result.getTopWorkHour())); // 勤務時間上限
-			form.setDownWorkHour(String.valueOf(result.getDownWorkHour())); // 勤務時間下限
-			form.setSalary(String.valueOf(result.getSalary())); // 給料
-			form.setSelectedEmployeeType(String.valueOf(result.getEmployeeType())); // 社員種別
-			form.setSelectedHasTax(String.valueOf(result.getHasTax())); // 税金有無
-		}
+			form.setJoiningDate(result.getJoiningDate().toString()); // 入社年月日
+			form.setU_name(result.getU_name());		//緊急連絡人
+			form.setRelationship(result.getRelationship());		//銘柄
+			form.setU_address(result.getU_address());	//緊急連絡住所
+			form.setU_phone(result.getU_phone());		//緊急連絡電話
+			}
 
 		return form;
 	}
@@ -174,25 +181,28 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 
 		List<CmsEmployeeBean> employeeList = mapper.select(bean);
 		CmsEmployeeBean updateBean = employeeList.get(0);
-
-		// 8桁不足の場合、前に０を埋める
-		updateBean.setEmployeeId(updateBean.getEmployeeId()); // 社員ID
-		updateBean.setName(form.getName()); // 名前
-		updateBean.setEmployeeKbn(form.getSelectedEmployeeKbn()); // 社員区分
+		
+		DepartmentBean dep = new DepartmentBean();
+		String depString = form.getDepartmentName();
+		dep.setDepartmentName(depString);
+		List<DepartmentBean> ret = generalMstMapper.selectDep(dep);
+		
+		updateBean.setEmployeeName(form.getEmployeeName()); // 名前
 		updateBean.setSex(form.getSelectedSexy()); // 性別
-		updateBean.setBirthday(updateBean.getBirthday()); // 生年月日
-		updateBean.setAddress(form.getAddress()); // 住所
-		updateBean.setPhone(form.getPhone()); // 携帯
-		updateBean.setJoiningDate(updateBean.getJoiningDate());// 入社年月日
 		updateBean.setMail(form.getMail()); // メール
-		updateBean.setJobType(form.getSelectedJobType()); // 職種
-		updateBean.setJobLevel("DUMY"); // 職種
-		updateBean.setLoginId(form.getMail()); // ログインID
-		updateBean.setTopWorkHour(Integer.valueOf(form.getTopWorkHour())); // 勤務時間上限
-		updateBean.setDownWorkHour(Integer.valueOf(form.getDownWorkHour())); // 勤務時間下限
-		updateBean.setSalary(new BigDecimal(form.getSalary())); // 給料
-		updateBean.setEmployeeType(form.getSelectedEmployeeType()); // 社員種別
-		updateBean.setHasTax(form.getSelectedHasTax()); // 税金有無
+		updateBean.setBirthday(form.getBirthday()); // 生年月日
+		updateBean.setPhone(form.getPhone()); // 携帯
+		updateBean.setAddress(form.getAddress()); // 住所
+		updateBean.setDepartmentID(ret.get(0).getDepartmentId());	//部門ID
+		updateBean.setDepartmentName(ret.get(0).getDepartmentName());	//部門名
+		updateBean.setCompanyID(form.getCompanyID());		//会社ID
+		updateBean.setCompanyName(form.getCompanyName());		//会社名
+		updateBean.setJobType(form.getJobType()); // 職種
+		updateBean.setJoiningDate(form.getJoiningDate());// 入社年月日
+		updateBean.setU_name(form.getU_name());	//緊急連絡人
+		updateBean.setRelationship(form.getRelationship()); //銘柄
+		updateBean.setU_address(form.getU_address());	//緊急連絡住所
+		updateBean.setU_phone(form.getU_phone());	//緊急連絡電話
 		
 		mapper.update(updateBean);
 	}
@@ -205,33 +215,33 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 	 * @return 社員フォーム
 	 */
 	public CmsEmployeeForm readInit(CmsEmployeeForm form) {
-
-		// ログイン情報を検索する
+//
 		CmsEmployeeBean sqlBean = new CmsEmployeeBean();
 		sqlBean.setEmployeeId(form.getEmployeeId());
-
+		
 		List<CmsEmployeeBean> searchResults = mapper.select(sqlBean);
 		if (!CollectionUtils.isEmpty(searchResults)) {
 			CmsEmployeeBean result = searchResults.get(0);
-
+			
 			form.setEmployeeId(result.getEmployeeId()); // 社員ID
-			form.setName(result.getName()); // 名前
-			form.setSelectedEmployeeKbn(result.getEmployeeKbn()); // 社員区分
+			form.setEmployeeName(result.getEmployeeName()); // 名前
 			form.setSelectedSexy(result.getSex()); // 性別
-			form.setBirthday(result.getBirthday());   // 生年月日
-			form.setAddress(result.getAddress()); // 住所
-			form.setPhone(result.getPhone()); // 携帯
-			form.setJoiningDate(result.getJoiningDate()); // 入社年月日
 			form.setMail(result.getMail()); // メール
+			form.setBirthday(result.getBirthday().toString());    // 生年月日
+			form.setPhone(result.getPhone()); // 携帯
+			form.setAddress(result.getAddress()); // 住所
+			form.setDepartmentName(result.getDepartmentName());	//部門名
+			form.setCompanyName(result.getCompanyName());	//会社名
+			form.setCompanyID("0001");	//会社ID
 			form.setJobType(result.getJobType()); // 職種
-			form.setSelectedJobType(result.getJobType()); // 職種(選択された)
-			form.setTopWorkHour(String.valueOf(result.getTopWorkHour())); // 勤務時間上限
-			form.setDownWorkHour(String.valueOf(result.getDownWorkHour())); // 勤務時間下限
-			form.setSalary(result.getSalary().toString()); // 給料
-			form.setSelectedEmployeeType(String.valueOf(result.getEmployeeType())); // 社員種別
-			form.setSelectedHasTax(String.valueOf(result.getHasTax())); // 税金有無
-		}
+			form.setJoiningDate(result.getJoiningDate().toString()); // 入社年月日
+			form.setU_name(result.getU_name());		//緊急連絡人
+			form.setRelationship(result.getRelationship());		//銘柄
+			form.setU_address(result.getU_address());	//緊急連絡住所
+			form.setU_phone(result.getU_phone());		//緊急連絡電話
+			
 
+		}
 		return form;
 	}
 	
@@ -267,6 +277,7 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 		
 		String[] delIds = form.getSelectedItemIds().split(",");
 		mapper.deleteAll(delIds);
+		
 
 		return form;
 	}
@@ -288,7 +299,7 @@ public class CmsEmployeeServiceImpl implements CmsEmployeeService {
 
 		//社員ID
 		String employeeId = param[0];
-		//更新日
+		//最終更新日
 		String updDateTime = param[1];
 		
 		//社員存在チェック

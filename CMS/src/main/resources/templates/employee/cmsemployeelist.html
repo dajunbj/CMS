@@ -24,7 +24,7 @@
 				<div class="search row">
 	                <div class="class_td_50">
 						<label>名前：</label>
-						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="社員名前" /> <!-- 非表示の明細ボタン -->
+						<input type="text" name="employeeName" id="employeeName" th:value="${form.employeeName}" placeholder="社員名前" /> <!-- 非表示の明細ボタン -->
 							<input type="submit" name="read" id="read" style="display: none;" />
 							<input type="submit" name="update" id="update" style="display: none;" />
 							<input type="submit" name="delete" id="delete" style="display: none;" />
@@ -33,17 +33,29 @@
 					
 	                <div class="class_td_50">
 						<label>所属会社：</label>
-						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="所属会社" />
-						🔎
+						<input type="text" name="companyName" id="companyName" th:value="${form.companyName}" placeholder="所属会社" />
+						
+						<!-- ----------PopUp画面 start---------- -->
+						<button type="button" class="btn btn-primary" data-toggle="modal" 
+						data-target="#exampleModal" style="padding:0;background-color:white;border-color:white;" id="openSelectEmployeeScreen">
+					 	🔎
+						</button>
+						<!-- ----------PopUp画面 end  ---------- -->
+						
+					</div>
+
+ 					<div class="class_td_50">
+						<label>部  門：</label>
+                               <select id="color" name="departmentName" style="width:120px;">
+								<option th:each="item : ${form.departmentList}" th:value="${item.value}"	th:text="${item.value}"
+									th:selected="${item.value} == ${form.departmentName}">
+								</option>
+						    	</select>
+							<span th:if="${#fields.hasErrors('departmentList')}" th:errors="*{departmentList}" style="color: red"></span>
 					</div>
 					
 	                <div class="class_td_50">
-						<label>部門：</label>
-						<input type="text" name="name" th:id="${form.name}" th:value="${form.name}" placeholder="部門" /> 
-					</div>
-					
-	                <div class="class_td_50">
-						<label>性別：</label>
+						<label>性  別：</label>
 					    <div th:each="item : ${form.sexyList}" style="display:inline-flex;vertical-align:middle;">
 					        <input type="radio" th:text="${item.value}" th:value="${item.key}" th:field="*{selectedSexy}" style="vertical-align:middle;">
 				        </div>
@@ -77,7 +89,7 @@
 							<td style="text-align: center;">
 							    <input type="checkbox" th:id="checkBoxId" th:name="checkBoxId" th:value="${data.employeeId}" />
 							</td>
-							<td th:text="${data.name}"></td>
+							<td th:text="${data.employeeName}"></td>
 							<td th:text="${data.sexForList}"></td>
 							<td th:text="${data.companyName}"></td>
 							<td th:text="${data.departmentName}"></td>
@@ -106,8 +118,14 @@
 				</div>
 			</div>
 		</div>
-
 	</form>
+	
+	<!-- ----------PopUp画面 start---------- -->
+	<div th:replace="model/selectemployee"></div>
+	<script type="text/javascript" th:src="@{/js/model/selectemployee.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- ----------PopUp画面 end  ---------- -->
+	
 	<div class="footer" th:insert="~{fragments/footer :: footer}">...</div>
 
 	<!-- 共通Js -->

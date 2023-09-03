@@ -4,13 +4,13 @@
 <!-- </button> -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="exampleModalCompany" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header" style="display: inline-flex;width:100%;">
 				<div style="width:50%">
-					<h5 class="modal-title" id="exampleModalLabel" style="font-size:16px;font-weight: bold;">所属会社選択画面</h5>
+					<h5 class="modal-title" id="exampleModalLabel" style="font-size:16px;font-weight: bold;">所属会社ID選択画面</h5>
 				</div>
 				<div style="width:50%">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="batuButton">
@@ -18,15 +18,14 @@
 					</button>
 				</div>
 			</div>
-			<div class="modal-body" style="padding:5px;">社員名：
-				<input type="text" id="param_employeename" />
-				<input type="submit" name="searchEmployees" id="searchEmployees" value="🔎" style="padding:0;background-color:white;border-color:white;"/> 
-				<div id="outputdiv"></div>
+			<div class="modal-body" style="padding:5px;">会社名：
+				<input type="text" id="param_companyName" />
+				<input type="submit" name="searchCompany" id="searchCompany" value="🔎" style="padding:0;background-color:white;border-color:white;"/> 
+				<div id="outputdivCompany"></div>
 
 			</div>
 			<div class="modal-footer" style="padding:5px;">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Close</button>
-<!-- 				<button type="button" class="btn btn-secondary" onclick="clickModelCloseButton();">Save changes</button> -->
 			</div>
 		</div>
 	</div>

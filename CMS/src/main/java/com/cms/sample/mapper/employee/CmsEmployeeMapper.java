@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.cms.sample.entity.company.CmsCompanyBean;
 import com.cms.sample.entity.employee.CmsEmployeeBean;
 
 /**
@@ -33,6 +34,14 @@ public interface CmsEmployeeMapper {
 	 * @return ユーザー情報
 	 */
 	List<CmsEmployeeBean> select(CmsEmployeeBean bean);
+	
+	/**
+	 * 会社情報検索
+	 * 
+	 * @param user 検索用リクエストデータ
+	 * @return 会社情報情報
+	 */
+	List<CmsCompanyBean> selectCompany(CmsCompanyBean bean);
 
 	/**
 	 * ユーザー情報登録

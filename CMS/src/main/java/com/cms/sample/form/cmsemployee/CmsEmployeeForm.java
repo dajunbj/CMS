@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -33,12 +32,13 @@ public class CmsEmployeeForm extends BaseForm {
 
 	@NotEmpty
 	@Length(max=8)
-	private String name;
+	private String employeeName;
+	
 	private String type;
 
 	//職種選択リスト
 	@NotEmpty
-	private String selectedJobType;
+	private String jobType;
 	private Map<String, String> jobTypeList;
 
 	//性別選択リスト
@@ -63,34 +63,31 @@ public class CmsEmployeeForm extends BaseForm {
 	@Email
 	@Length(max=100)
 	private String mail;
-	private String jobType;
-	private String jobLevel;
 
-    @Min(value = 140,message = "勤務時間上限は220時間となります。")
-	private String topWorkHour;
-
-    @Min(value = 140,message = "勤務時間下限は140時間となります。")
-	private String downWorkHour;
-	
+	//部門名
 	@NotEmpty
-	@Length(max=8)
-	private String salary;
-
+	private String departmentName;
+	private Map<String, String> departmentList;
+	
+	//部門Id
+	private String departmentID;
+	
+	//所属会社
+	private String companyName;
+	private String companyID;
+	
+	
 	private Date registrationDate;
 	private Date updateDate;
-
-	//社員区分
-	private Map<String, String> employeeKbnMap;
-	private String selectedEmployeeKbn;
 	
-	//社員種別
-	@NotEmpty
-	private String selectedEmployeeType;
-	private Map<String, String> employeeTypeList;
+	//緊急連絡先一覧
+	private String u_name;
 	
-	//税金有無
-	@NotEmpty
-	private String selectedHasTax;
-	private Map<String, String> hasTaxList;
+	private String u_address;
+	
+	private String u_phone;
+	
+	private String relationship;
 
+	
 }

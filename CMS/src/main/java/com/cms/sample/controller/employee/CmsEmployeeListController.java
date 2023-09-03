@@ -53,7 +53,7 @@ public class CmsEmployeeListController extends ControllerBase {
 			CmsEmployeeListForm form = new CmsEmployeeListForm();
 			
 			//session情報の設定
-			this.setScreenHidden(request, form);
+			this.setScreenHidden(request,form);
 			
 			super.setCommonItem(form, true);
 			model.addAttribute("form", form);
@@ -76,6 +76,7 @@ public class CmsEmployeeListController extends ControllerBase {
 			
 		    // 画面データ初期化
 			searchScreenList(form, model);
+			
 		} catch (BusinessException be) {
 			
 			//業務エラーを画面に表示する
@@ -156,7 +157,7 @@ public class CmsEmployeeListController extends ControllerBase {
 		String[] param = update.split("_");
 		try {
 
-			//削除対象をサービスに渡す
+			//社員ID+最終更新日
 			form.setSelectedItemId(update);
 			//参照ボタンの場合、trueを設定する
 			form.setBtnFlg(true);
@@ -214,6 +215,7 @@ public class CmsEmployeeListController extends ControllerBase {
 		service.deleteAll(form);
 
 		// 画面データ初期化
+		service.select(form);
 		searchScreenList(form, model);
 		
 		return UrlConst.cmsemployeelist;
@@ -250,7 +252,6 @@ public class CmsEmployeeListController extends ControllerBase {
 		//職種を設定する
 		String jobType = String.valueOf(session.getAttribute("jobType"));
 		form.setSessionJobType(jobType);
-		
 		//社員の場合、新規ボタンを禁止する
 		form.setDisabledFlg(("J5".equals(jobType)) ? "display:none;":"");
 	}

@@ -9,8 +9,8 @@
 		parameterType="com.cms.base.entity.GeneralMstBean"
 		resultType="com.cms.base.entity.GeneralMstBean">
 		SELECT
-		generalId
-		, generalName
+		generalId,
+		generalName
 		FROM
 		cms_general_mst
 		<where>
@@ -19,5 +19,24 @@
 			</if>
 		</where>
 		order by generalId
+	</select>
+	
+	<select id="selectDep"
+		parameterType="com.cms.base.entity.DepartmentBean"
+		resultType="com.cms.base.entity.DepartmentBean">
+		SELECT
+			cms.departmentId,
+			cms.departmentName
+		FROM
+			cms_pg.cms_department cms
+		<where>
+			<if test="departmentName != null and departmentName != ''">
+			and departmentName like concat('%',#{departmentName},'%')
+			</if>
+			<if test="departmentId != null and departmentId != ''">
+			and departmentId = #{departmentId}
+			</if>
+		</where>
+		order by departmentId
 	</select>
 </mapper>

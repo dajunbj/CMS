@@ -29,7 +29,7 @@ public class CmsEmployeeAddController extends ControllerBase {
 	@Autowired
 	ServiceUtils serviceUtils;
 	/**
-	 * 社員登録画面を初期化する
+	 * 社員新規画面を初期化する
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	private String init(Model model) {
@@ -60,6 +60,7 @@ public class CmsEmployeeAddController extends ControllerBase {
 
 			model.addAttribute("errorMessage", "システムエラーが発生しました。管理員へご連絡ください。");
 //			model.addAttribute("form", form);
+			System.out.println(e);
 			return null;
 		}
 

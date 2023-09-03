@@ -18,5 +18,7 @@ public interface CommonMapper {
 	 * @return コードマスタ情報
 	 */
 	List<MCodeMstBean> select(MCodeMstBean bean);
+	
+	
 
 }
